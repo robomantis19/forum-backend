@@ -13,7 +13,7 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: localPGConnection
+    connection: heroku
   },
 
   staging: {
