@@ -4,6 +4,7 @@ const localPg = {
   port: 5432, 
   database: 'forum-busters', 
 }
+
 const heroku = process.env.DATABASE_URL + '?ssl=true'
 
 const localPGConnection = `postgres://@localhost/forum-busters`
