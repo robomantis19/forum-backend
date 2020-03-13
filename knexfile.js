@@ -18,7 +18,7 @@ module.exports = {
 
   staging: {
     client: 'pg',
-    connection: localPGConnection,
+    connection: heroku,
     pool: {
       min: 2,
       max: 10
