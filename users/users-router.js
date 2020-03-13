@@ -13,14 +13,14 @@ const bcrypt = require("bcryptjs");
 
 router.post("/register", (req, res) => {
     let userData = req.body;
-    const hash = bcrypt.hashSync(userData.password, 8);
+    const hash = bcrypt.hashSync(userData.password, 10);
     userData.password = hash;
-    console.log(userData);
+    console.log('userData', userData);
     Users.add(userData)
       .then(user => {
-          console.log(user)
-        const token = signToken(user);
-        res.status(201).json({id: user.id, username: user.username, token});
+          console.log('/register user', user)
+        // const token = signToken(user);
+        res.status(201).json({id: user.id, user_name: user.user_name});
       })
       .catch(error => {
         console.log(error);
@@ -29,13 +29,16 @@ router.post("/register", (req, res) => {
   });
 
 router.post("/login", (req, res) => {
-let { username, password } = req.body;
-Users.findBy({ username })
+    const { user_name, password} = req.body;
+    console.log('login password hash', password)
+    Users.findBy({user_name})
     .then(user => {
+        console.log('/login user', user);
     if (user && bcrypt.compareSync(password, user.password)) {
         const token = signToken(user);
         res.status(200).json({
-        message: `${user.username} Logged In!`,
+        user_name: user.user_name, 
+        message: `${user.user_name} Logged In!`,
         token,
         id: user.id
         });
@@ -51,7 +54,7 @@ Users.findBy({ username })
 
 function signToken(user) {
 const payload = {
-    username: user.username
+    user_name: user.user_name
 };
 
 const secret = process.env.JWT_SECRET || "secret code";
@@ -86,6 +89,26 @@ router.get('/messages', (req, res) => {
 })
 router.post('/:id/messages', (req, res) => { 
     Users.addMessages(req.body, req.params.id)
+    .then(users => { 
+        res.status(201).json(users)
+    })
+    .catch(err => { 
+        console.log('/users get error: ', err)
+        res.status(500).json({errorMessage: 'could not post messages', err: err})
+    })
+})
+router.put('/:id/views', (req, res) => { 
+    Users.addViews(req.body, req.params.id)
+    .then(users => { 
+        res.status(201).json(users)
+    })
+    .catch(err => { 
+        console.log('/users get error: ', err)
+        res.status(500).json({errorMessage: 'could not post messages', err: err})
+    })
+})
+router.get('/getAll/views', (req, res) => { 
+    Users.getAllViews()
     .then(users => { 
         res.status(201).json(users)
     })
