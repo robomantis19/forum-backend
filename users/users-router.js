@@ -11,6 +11,7 @@ const bcrypt = require("bcryptjs");
 // var unzipper = require("unzipper");
 
 
+
 router.post("/register", (req, res) => {
     let userData = req.body;
     const hash = bcrypt.hashSync(userData.password, 10);
