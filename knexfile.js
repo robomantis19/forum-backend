@@ -1,9 +1,12 @@
 // Update with your config settings.
+require('dotenv').config();
+
 const localPg = {
   host:'localhost', 
   port: 5432, 
   database: 'forum-busters', 
 }
+
 
 
 const heroku = process.env.DATABASE_URL 

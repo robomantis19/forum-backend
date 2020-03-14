@@ -41,6 +41,7 @@ async function getUserById(id) {
 }
 
 
+
 async function findMessages(){
     return db('Message').select('id', 'from_user', 'message', 'starRating', 'user_id', 'views').orderBy('id', 'desc')
 }
