@@ -6,7 +6,7 @@ const localPg = {
 }
 
 
-const heroku = process.env.DATABASE_URL + '?ssl=true'
+const heroku = process.env.DATABASE_URL 
 
 const localPGConnection = `postgres://@localhost/forum-busters`
 module.exports = {
