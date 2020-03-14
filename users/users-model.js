@@ -53,6 +53,7 @@ async function addMessages(input, urlId){
     const [id] = await db('Message').insert(input).returning('id');
     return findMessagesById(id, urlId)
 }
+
 async function addViews(input, urlId){
     console.log('input and userid', input, urlId)
     let messages = await db('Message as M')
